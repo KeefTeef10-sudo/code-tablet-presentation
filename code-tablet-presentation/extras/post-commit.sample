@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+set -e
+branch="$(git rev-parse --abbrev-ref HEAD)"
+remote="${1:-origin}"
+if git ls-remote --exit-code "$remote" &>/dev/null; then
+  echo "🔗 post-commit: pushing to $remote/$branch..."
+  git push "$remote" "$branch"
+else
+  echo "⚠️ post-commit: remote '$remote' not reachable; skip push."
+fi
